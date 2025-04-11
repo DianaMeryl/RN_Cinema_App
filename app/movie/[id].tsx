@@ -12,6 +12,7 @@ import {
   import { icons } from "@/constants/icons";
   import useFetch from "@/hooks/useFetch";
   import { fetchMovieDetails } from "@/services/api";
+import GlowButton from "@/components/GlowButton";
   
   interface MovieInfoProps {
     label: string;
@@ -35,6 +36,10 @@ import {
     const { data: movie, loading } = useFetch(() =>
       fetchMovieDetails(id as string)
     );
+
+    const onGoHome = () =>{
+      router.push(`/`);
+    };
 
    const goToTrailer = (videoId: string) => {
     router.push(`/watch-video/${videoId}`);
@@ -115,10 +120,14 @@ import {
                 "N/A"
               }
             />
-          </View>
+            </View>
+
+            <View className="flex-1 justify-center items-center">
+              <GlowButton text="Go Back" onPress={onGoHome}  />
+            </View>
         </ScrollView>
-  
-        <TouchableOpacity
+        
+        {/* <TouchableOpacity
           className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
           onPress={router.back}
         >
@@ -128,7 +137,7 @@ import {
             tintColor="#fff"
           />
           <Text className="text-white font-semibold text-base">Go Back</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };

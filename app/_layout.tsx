@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import "./globals.css";
 import { StatusBar } from "react-native";
 import { StoreProvider } from "../stores/StoreContext";
+import { Text } from 'react-native';
 
 export default function RootLayout() {
   return (
@@ -13,6 +14,22 @@ export default function RootLayout() {
           name="(tabs)"
           options={{
             headerShown: false,
+          //   headerTitle: () => (
+          //     <Text style={{
+          //       fontSize: 28,
+          //       fontWeight: 'bold',
+          //       color: '#9bddff',
+          //       textAlign: 'center',
+          //       textAlignVertical: 'center',
+          //       width: '100%',
+          //       textTransform: 'uppercase',
+          //     }}>
+          //       Cinema
+          //     </Text>
+          //   ),
+          //   headerStyle: {
+          //     backgroundColor: "#800080", 
+          // },
           }}
         />
         <Stack.Screen

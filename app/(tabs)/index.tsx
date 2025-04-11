@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 import useFetch from "@/hooks/useFetch";
@@ -12,10 +13,35 @@ import { fetchMovies } from "@/services/api";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
+import { useHeaderHeight } from "@react-navigation/elements";
+import {Ionicons} from "@expo/vector-icons";
+import Animated, {
+  useAnimatedRef,
+  useAnimatedStyle, 
+  useScrollViewOffset,
+  withTiming
+} from 'react-native-reanimated';
 
 const Index = () => {
 
-  const router = useRouter();
+  // const router = useRouter();
+
+  const headerHeight = useHeaderHeight();
+
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const scrollHandler = useScrollViewOffset(scrollRef);
+
+  const buttonStyle = useAnimatedStyle(() => {
+    return {
+      opacity: scrollHandler.value > 600 ? withTiming(1) : withTiming(0),
+    }
+  });
+
+  const scrollTop = () => {
+    scrollRef.current?.scrollTo({
+      x:0, y:0, animated:true
+    });
+  };
 
   const {
     data: movies,
@@ -31,10 +57,13 @@ const Index = () => {
         resizeMode="cover"
       />
 
-      <ScrollView
+      <Animated.ScrollView
+        ref={scrollRef}
+        style={{ paddingTop: headerHeight }}
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
+        contentInsetAdjustmentBehavior="automatic"
       >
         <Image source={icons.logo} className="w-[125px] h-24 mt-10 mb-5 mx-auto" />
 
@@ -70,7 +99,14 @@ const Index = () => {
             </>
           </View>
         )}
-      </ScrollView>
+      </Animated.ScrollView>
+
+      <Animated.View style={[buttonStyle, {position: "absolute", bottom: 100, right:20}]}>
+        <TouchableOpacity onPress={scrollTop} style={{backgroundColor: "#ff00ff", borderRadius: 20, padding: 10}}>
+          <Ionicons name="chevron-up" size={28} color="white"/>
+        </TouchableOpacity>
+      </Animated.View>
+
     </View>
   );
 };

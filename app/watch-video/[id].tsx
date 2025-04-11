@@ -3,6 +3,7 @@ import useFetchVideo from "../../hooks/useFetchVideo";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { View,Text, TouchableOpacity, SafeAreaView, Alert, ImageBackground } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import GlowButton from '@/components/GlowButton';
 
 export default function WatchVideo() {
 
@@ -42,7 +43,6 @@ export default function WatchVideo() {
             onChangeState={event => console.log(event)}
           />
           </View>
-
           <TouchableOpacity 
             style={{
               marginTop: 20,
